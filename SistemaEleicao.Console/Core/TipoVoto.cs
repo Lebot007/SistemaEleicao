@@ -1,4 +1,4 @@
-namespace SistemaEleicao.Console;
+namespace SistemaEleicao.Core;
 
 /// <summary>
 /// Tipo de voto registrado na urna.

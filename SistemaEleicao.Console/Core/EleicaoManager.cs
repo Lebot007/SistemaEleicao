@@ -1,4 +1,4 @@
-namespace SistemaEleicao.Console;
+namespace SistemaEleicao.Core;
 
 /// <summary>
 /// Classe de gerência da eleição: cadastro de candidatos, controle de

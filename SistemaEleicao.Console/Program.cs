@@ -1,4 +1,4 @@
-using SistemaEleicao.Console;
+using SistemaEleicao.Core;
 
 var manager = new EleicaoManager();
 var opcao = -1;

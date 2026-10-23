@@ -1,4 +1,4 @@
-using SistemaEleicao.Console;
+using SistemaEleicao.Core;
 using Xunit;
 
 namespace SistemaEleicao.Tests;

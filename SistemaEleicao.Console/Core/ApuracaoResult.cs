@@ -1,4 +1,4 @@
-namespace SistemaEleicao.Console;
+namespace SistemaEleicao.Core;
 
 /// <summary>
 /// Resultado da apuração da eleição: classificação dos candidatos,
