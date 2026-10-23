@@ -1,0 +1,69 @@
+# Padrões de código da solução SistemaEleicao.
+# Mantém o estilo já adotado no projeto: indentação de 4 espaços, LF,
+# namespaces file-scoped e `var` quando o tipo é evidente.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{csproj,props,targets,yml,yaml,json}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.cs]
+# Organização
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+csharp_using_directive_placement = outside_namespace:suggestion
+csharp_style_namespace_declarations = file_scoped:suggestion
+
+# Modificadores e palavras-chave
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
+dotnet_style_readonly_field = true:suggestion
+
+# var
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = true:suggestion
+
+# Expressões
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_operators = when_on_single_line:suggestion
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+
+# Nomes
+dotnet_naming_rule.camelo_para_campos_privados.severity = suggestion
+dotnet_naming_rule.camelo_para_campos_privados.symbols = campos_privados
+dotnet_naming_rule.camelo_para_campos_privados.style = prefixo_underscore_camel
+dotnet_naming_symbols.campos_privados.applicable_kinds = field
+dotnet_naming_symbols.campos_privados.applicable_accessibilities = private
+dotnet_naming_style.prefixo_underscore_camel.required_prefix = _
+dotnet_naming_style.prefixo_underscore_camel.capitalization = camel_case
+
+dotnet_naming_rule.pascal_para_constantes.severity = suggestion
+dotnet_naming_rule.pascal_para_constantes.symbols = constantes
+dotnet_naming_rule.pascal_para_constantes.style = pascal
+dotnet_naming_symbols.constantes.applicable_kinds = field
+dotnet_naming_symbols.constantes.applicable_accessibilities = *
+dotnet_naming_symbols.constantes.required_modifiers = const
+dotnet_naming_style.pascal.capitalization = pascal_case
+
+# Quebras de linha
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
