@@ -20,13 +20,30 @@ public sealed class UrnaConsole
     private readonly EleicaoManager _manager;
     private readonly TextReader _entrada;
     private readonly TextWriter _saida;
+    private readonly OpcaoMenu[] _opcoes;
 
     public UrnaConsole(EleicaoManager manager, TextReader entrada, TextWriter saida)
     {
         _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         _entrada = entrada ?? throw new ArgumentNullException(nameof(entrada));
         _saida = saida ?? throw new ArgumentNullException(nameof(saida));
+
+        _opcoes = new[]
+        {
+            new OpcaoMenu(1, "Cadastrar candidato", CadastrarCandidato),
+            new OpcaoMenu(2, "Registrar eleitor", RegistrarEleitor),
+            new OpcaoMenu(3, "Votar", Votar),
+            new OpcaoMenu(4, "Apurar resultados", Apurar),
+            new OpcaoMenu(5, "Listar candidatos", ListarCandidatos),
+            new OpcaoMenu(6, "Resumo parcial da eleição", ExibirResumoParcial)
+        };
     }
+
+    /// <summary>
+    /// Uma opção do menu: o código digitado pelo usuário, o rótulo exibido na
+    /// tela e a ação executada quando a opção é selecionada.
+    /// </summary>
+    private sealed record OpcaoMenu(int Codigo, string Rotulo, Action Acao);
 
     /// <summary>Executa o laço principal do menu até o usuário sair ou a entrada terminar.</summary>
     public void Executar()
@@ -54,30 +71,14 @@ public sealed class UrnaConsole
                 return;
             }
 
-            switch (opcao)
+            var selecionada = Array.Find(_opcoes, o => o.Codigo == opcao);
+            if (selecionada is null)
             {
-                case 1:
-                    CadastrarCandidato();
-                    break;
-                case 2:
-                    RegistrarEleitor();
-                    break;
-                case 3:
-                    Votar();
-                    break;
-                case 4:
-                    Apurar();
-                    break;
-                case 5:
-                    ListarCandidatos();
-                    break;
-                case 6:
-                    ExibirResumoParcial();
-                    break;
-                default:
-                    EscreverLinha("Opção inexistente. Escolha uma opção do menu.");
-                    break;
+                EscreverLinha("Opção inexistente. Escolha uma opção do menu.");
+                continue;
             }
+
+            selecionada.Acao();
         }
     }
 
@@ -85,12 +86,10 @@ public sealed class UrnaConsole
     {
         EscreverLinha(string.Empty);
         EscreverLinha(CabecalhoMenu);
-        EscreverLinha("1 - Cadastrar candidato");
-        EscreverLinha("2 - Registrar eleitor");
-        EscreverLinha("3 - Votar");
-        EscreverLinha("4 - Apurar resultados");
-        EscreverLinha("5 - Listar candidatos");
-        EscreverLinha("6 - Resumo parcial da eleição");
+
+        foreach (var opcao in _opcoes)
+            EscreverLinha($"{opcao.Codigo} - {opcao.Rotulo}");
+
         EscreverLinha($"{OpcaoSair} - Sair");
         Escrever("Escolha uma opção: ");
     }
