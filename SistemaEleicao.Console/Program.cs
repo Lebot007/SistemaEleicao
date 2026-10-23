@@ -1,4 +1,5 @@
 using SistemaEleicao.Core;
+using SistemaEleicao.Ui;
 
 var manager = new EleicaoManager();
 var opcao = -1;
@@ -112,29 +113,9 @@ void Votar()
 
 void Apurar()
 {
-    var resultado = manager.Apurar();
-
     Console.WriteLine();
-    Console.WriteLine("========== APURAÇÃO FINAL ==========");
-    if (resultado.Classificacao.Count == 0)
-    {
-        Console.WriteLine("Nenhum candidato cadastrado.");
-    }
-
-    foreach (var candidato in resultado.Classificacao)
-    {
-        Console.WriteLine($"{candidato.Numero} - {candidato.Nome}: {candidato.Votos} voto(s)");
-    }
-
-    Console.WriteLine($"Votos brancos: {resultado.VotosBrancos}");
-    Console.WriteLine($"Votos nulos: {resultado.VotosNulos}");
-
-    if (resultado.Vencedores.Count == 0)
-        Console.WriteLine("Eleição sem votos computados: não há vencedor.");
-    else if (resultado.Vencedores.Count > 1)
-        Console.WriteLine($"EMPATE entre: {string.Join(", ", resultado.Vencedores.Select(v => $"{v.Nome} (número {v.Numero})"))}");
-    else
-        Console.WriteLine($"VENCEDOR: {resultado.Vencedores[0].Nome} (número {resultado.Vencedores[0].Numero}) com {resultado.Vencedores[0].Votos} voto(s).");
+    foreach (var linha in ApuracaoReport.GerarLinhas(manager.Apurar()))
+        Console.WriteLine(linha);
 }
 
 bool LerInteiro(out int valor)
